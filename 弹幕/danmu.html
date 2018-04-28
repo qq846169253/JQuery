@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <meta charset="utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <!--  
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />  
+    <link href="favicon.ico" rel="Bookmark" type="image/x-icon" />  
+    -->  
+    <meta name="Generator" content="EditPlus®">  
+    <meta name="Author" content="">  
+    <meta name="Keywords" content="">  
+    <meta name="Description" content="">  
+    <title>JQuery弹幕</title>  
+    <link href="" rel="stylesheet" /> 
+  <style type="text/css" media="screen">
+ #kq{
+   background: white;
+   width: 800px;
+   height: 400px;
+   overflow: hidden;
+   margin: 0 auto;
+   border: 1px solid;
+ }
+#msg{
+  height: 20px;
+  width: 200px;
+}
+#kq p{
+	position:relative;
+	left:800px;
+	margin:0px;
+	padding:0px;
+	}
+  </style>
+ 
+
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="kq" class="tet">
+
+</div>
+
+ <center>
+<form >
+  <input type="text" name="message" id="msg" ><br>
+  <button  type="button" id="sumt">发布弹幕</button>
+  <button type="button" id="qk">清空弹幕</button>
+</form>
+</center>
+
+<script type="text/javascript">
+  $(function(){
+    $("#sumt").click(function(){
+     
+     var msgtxt=$("#msg").val();//获取弹幕内容
+       
+     var colortxt=getRandomColor();//得到随机颜色
+	
+     //想要弹幕在随机行出现 一个思路就是距离弹幕框顶端随机距离处弹幕出现
+     var topnum= generateMixed(3);//得到随机的三位数
+	 
+     if(topnum>350)//弹幕框高400px 超过350 自动定义为中间距离200
+     {
+          topnum=200;
+     }
+   
+     var newtxt='<p style="top:'+topnum+'px; color:'+colortxt+'">'+msgtxt+'</p>';
+	  
+     $("#kq").append(newtxt);//将添加样式的内容添加到弹幕框中
+      var msgtwidth=$("#kq").find("p").width();//得到p元素长度 然后添加动画效果 最后消失
+      $("#kq p").animate({left:'-'+msgtwidth+"px"},15000,function(){
+         $(this).hide();
+      });
+       });
+	 $("#qk").click(function(){
+		    $("#kq").empty(); 
+		 }) ;
+  })
+ 
+      //获取随机颜色
+      var getRandomColor = function(){
+         return '#'+Math.floor(Math.random()*16777215).toString(16);
+     }
+     //获取随机三位数
+      var jschars = ['0','1','2','3','4','5','6','7','8','9'];    
+      function generateMixed(n) {    
+        var res = "";    
+        for(var i = 0; i < n ; i ++) {    
+            var id = Math.ceil(Math.random()*9);    
+            res += jschars[id];    
+        }    
+        return res;    
+    }  
+   
+</script>
+
+</body>
+</html>
